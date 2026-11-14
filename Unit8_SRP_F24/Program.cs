@@ -36,9 +36,12 @@ class Program
         ITradeParser tradeParser = new SimpleTradeParser(tradeValidator, tradeMapper);
         ITradeStorage tradeStorage = new AdoNetTradeStorage(logger);
 
+        // set up a trade data provider that adjusts the trade data (converts GBP to EUR)
+        ITradeDataProvider adjustedProvider = new AdjustTradeDataProvider(URLProvider);
+
         // set up the trade processor with different trade data providers
         //var tradeProcessor = new TradeProcessor(fileProvider, tradeParser, tradeStorage);
-        var tradeProcessor = new TradeProcessor(URLProvider, tradeParser, tradeStorage);
+        var tradeProcessor = new TradeProcessor(adjustedProvider, tradeParser, tradeStorage);
         //var tradeProcessor = new TradeProcessor(RestfulAPIProvider, tradeParser, tradeStorage);
 
         tradeProcessor.ProcessTrades();
