@@ -16,15 +16,14 @@ public class RestfulTradeDataProvider : ITradeDataProvider
         this.logger = logger;
     }
 
-    public IEnumerable<string> ReadTradeData()
+    public async Task<IEnumerable<string>> ReadTradeDataAsync()
     {
         logger.LogMessage("Reading trade data from Restful API (This will block for now): " + url);
-        Task<List<string>> task = ReadTradeDataAsync();
-        task.Wait();                        // wait for the async task to complete (blocking)
-        return task.Result;                 // return the result of the async task
+        Task<List<string>> task = ReadTradeDataRestAsync();
+        return await task;
     }
 
-    private async Task<List<string>> ReadTradeDataAsync()
+    private async Task<List<string>> ReadTradeDataRestAsync()
     {
         List<string>? trades = await client.GetFromJsonAsync<List<string>>(url)
             .ConfigureAwait(false);

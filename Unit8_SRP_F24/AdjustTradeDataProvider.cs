@@ -12,9 +12,9 @@ public class AdjustTradeDataProvider : ITradeDataProvider
         _tradeDataProvider = tradeDataProvider;
     }
 
-    public IEnumerable<string> ReadTradeData()
+    public async Task<IEnumerable<string>> ReadTradeDataAsync()
     {
-        IEnumerable<string> tradeData = _tradeDataProvider.ReadTradeData();
+        IEnumerable<string> tradeData = await _tradeDataProvider.ReadTradeDataAsync();
         
         // Convert every instance of "GBP" to "EUR" in the trade data
         List<string> adjustedTradeData = new List<string>();

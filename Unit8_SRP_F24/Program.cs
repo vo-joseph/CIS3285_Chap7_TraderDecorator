@@ -6,7 +6,7 @@ namespace Unit8_SRP_F24;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         ILogger consoleLogger = new ConsoleLogger();
         LoggerXMLDecorator logger = new LoggerXMLDecorator(consoleLogger);  // decorate the console logger with XML logging functionality
@@ -44,7 +44,7 @@ class Program
         var tradeProcessor = new TradeProcessor(adjustedProvider, tradeParser, tradeStorage);
         //var tradeProcessor = new TradeProcessor(RestfulAPIProvider, tradeParser, tradeStorage);
 
-        tradeProcessor.ProcessTrades();
+        await tradeProcessor.ProcessTrades();
 
     }
 }
